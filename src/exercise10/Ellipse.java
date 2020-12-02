@@ -1,70 +1,54 @@
 package exercise10;
 
-public class Ellipse {
+public class Ellipse extends Figure{
+
     private Point startPoint;
-    private double a;
+    private double side 1;
     private double b;
 
     public Ellipse() {
-        startPoint = new Point(0, 0);
-        a = 1;
-        b = 1;
+      super(new Point(0,0) , 1 , 1);
+
     }
 
-    public Ellipse(Point startPoint, double a, double b) {
-        this.startPoint = new Point(startPoint);
-        this.a = a;
-        this.b = b;
+    public Ellipse(Point startPoint, double side1, double side2) {
+        super(new Point(startPoint), side1, side2);
+
+
     }
 
     public Ellipse(Ellipse otherEllipse) {
         startPoint = new Point(otherEllipse.startPoint);
-        a = otherEllipse.a;
-        b = otherEllipse.b;
+        side1 = otherEllipse.side1;
+        side2 = otherEllipse.side2;
     }
 
-    public boolean isValid() {
-        return a > 0 && b > 0;
-    }
-
-    public void initialize() {
-        do {
-            System.out.println("Start point: ");
-            startPoint.initialize();
-            System.out.print("Enter a: ");
-            a = Utils.INPUT.nextDouble();
-            System.out.print("Enter b: ");
-            b = Utils.INPUT.nextDouble();
-        } while (!isValid());
-    }
 
     public double calculatePerimeter() {
-        return Math.PI * (3.0 * (a + b) - Math.sqrt((3.0 * a + b) * (a + 3.0 * b)));
+        return Math.PI * (3.0 * (side1 + side2) - Math.sqrt((3.0 * side1 + side2) * (side1 + 3.0 * side2)));
     }
 
     public double calculateArea() {
-        return Math.PI * a * b;
+        return Math.PI * side1 * side2;
     }
 
     public String getType() {
-        return (a == b) ? "Circle" : "Ellipse";
-    }
-
-    public String toString() {
-        return String.format("%s-[%s, %s], %s, P=%s, A=%s", startPoint, a, b, getType(), calculatePerimeter(), calculateArea());
+        return (side1 == side2) ? "Circle" : "Ellipse";
     }
 
     public boolean equal(Ellipse otherEllipse) {
-        boolean sameA = Utils.equals(a, otherEllipse.a);
-        boolean sameB = Utils.equals(b, otherEllipse.b);
-        boolean sameAReversed = Utils.equals(a, otherEllipse.b);
-        boolean sameBReversed = Utils.equals(b, otherEllipse.a);
+        boolean sameSide1 = Utils.equals(side1, otherEllipse.side1);
+        boolean sameSide2 = Utils.equals(side2, otherEllipse.side2);
+        boolean sameSide1Reversed = Utils.equals(side1, otherEllipse.side2);
+        boolean sameSideBReversed = Utils.equals(side2, otherEllipse.side2);
 
         return (sameA && sameB) || (sameAReversed && sameBReversed);
     }
 
     public boolean containsClick(Point click) {
         // Check if click point is inside the rectangle
+        double solution = Math.pow((click.getX()- startPoint.getX()),2)/(Math.pow(side2,2));
+
         return false;
     }
 }
